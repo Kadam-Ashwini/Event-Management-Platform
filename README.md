@@ -99,9 +99,7 @@ Visit the app at **http://127.0.0.1:8000/**
 | Payment | Payment_ID, Payment_Date, Payment_Amount, Payment_Method |
 | Feedback | Feedback_ID, Customer_ID, Rating, Comments, Feedback_Date |
 
-Full ER diagram and UML diagrams (Use Case, Class, Activity, Sequence, Component) are available in the project report.
 
----
 
 ## 👥 User Roles
 
