@@ -2,10 +2,6 @@
 
 A Django-based web application for planning, organizing, and managing events online. It provides a centralized platform where **admins/organizers** can create and manage events, food items, and bookings, while **customers** can register, browse events, book tickets, select food add-ons, make payments, and leave feedback.
 
-Built as a Mini Project for the MCA program at Dr. Moonje Institute of Management and Information Technology, Nashik (Savitribai Phule Pune University), 2025–26.
-
----
-
 ## ✨ Features
 
 - **User Authentication** – Registration, login, and logout for customers
@@ -41,6 +37,7 @@ event/
 ├── feedback/         # Customer feedback module
 ├── reports/           # Admin dashboard & reporting
 ├── templates/         # Shared/base templates
+├── screenshots/        # README screenshots
 ├── manage.py
 └── requirements.txt
 ```
@@ -115,7 +112,23 @@ Full ER diagram and UML diagrams (Use Case, Class, Activity, Sequence, Component
 
 ## 📸 Screenshots
 
-Screenshots of user login, event booking, payment process, feedback form, and the admin dashboard are included in the project report (`Event_Management_System.pdf`).
+### User Login
+![User Login](screenshots/login.png)
+
+### Upcoming Events
+![Upcoming Events](screenshots/home.png)
+
+### Booking an Event
+![Booking Event](screenshots/booking.png)
+
+### Payment Process
+![Payment Process](screenshots/payment.png)
+
+### Feedback Form
+![Feedback Form](screenshots/feedback.png)
+
+### Admin Dashboard
+![Admin Dashboard](screenshots/admin_dashboard.png)
 
 ---
 
@@ -140,14 +153,4 @@ Screenshots of user login, event booking, payment process, feedback form, and th
 
 ## 👤 Author
 
-**Kadam Ashwini Sudhir**
-MCA, Dr. Moonje Institute of Management and Information Technology, Nashik
-Savitribai Phule Pune University
-
-Guided by: **Mrs. Aishwarya Borse**
-
----
-
-## 📄 License
-
-This project was developed for academic purposes as part of the MCA curriculum.
+**Kadam Ashwini**
