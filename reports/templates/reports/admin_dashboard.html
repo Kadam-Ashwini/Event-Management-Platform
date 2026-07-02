@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h2 style="margin: 0;">Admin Dashboard</h2>
+    <div style="color: var(--text-light);">
+        <i class="fas fa-user-shield"></i> Logged in as {{ user.username }}
+    </div>
+</div>
+
+<div class="stats">
+    <div class="stat-box">
+        <i class="fas fa-calendar-check" style="font-size: 2rem; color: var(--primary-color); margin-bottom: 10px;"></i>
+        <h3>{{ total_events }}</h3>
+        <p>Total Events</p>
+    </div>
+    <div class="stat-box" style="border-bottom-color: var(--secondary-color);">
+        <i class="fas fa-ticket-alt" style="font-size: 2rem; color: var(--secondary-color); margin-bottom: 10px;"></i>
+        <h3>{{ total_bookings }}</h3>
+        <p>Total Bookings</p>
+    </div>
+    <div class="stat-box" style="border-bottom-color: var(--accent-color);">
+        <i class="fas fa-dollar-sign" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 10px;"></i>
+        <h3>₹{{ total_revenue }}</h3>
+        <p>Total Revenue</p>
+    </div>
+</div>
+
+<div class="actions" style="margin-bottom: 30px; display: flex; gap: 15px;">
+    <a href="{% url 'event_create' %}" class="button">
+        <i class="fas fa-plus"></i> Add New Event
+    </a>
+    <a href="/admin/auth/user/" class="button secondary">
+        <i class="fas fa-users-cog"></i> Manage Users
+    </a>
+</div>
+
+<h3><i class="fas fa-calendar-alt"></i> Recent Events</h3>
+<div class="table-container" style="margin-bottom: 30px;">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in recent_events %}
+            <tr>
+                <td>#{{ event.id }}</td>
+                <td>{{ event.title }}</td>
+                <td>{{ event.date }}</td>
+                <td>{{ event.location }}</td>
+                <td style="font-weight: 600;">₹{{ event.price }}</td>
+                <td>
+                    <div style="display: flex; gap: 10px;">
+                        <a href="{% url 'event_update' event.id %}" class="button small"
+                            style="padding: 4px 8px; font-size: 0.8rem;">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <a href="{% url 'event_delete' event.id %}" class="button small"
+                            style="background-color: var(--danger-color); padding: 4px 8px; font-size: 0.8rem;">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" style="text-align: center; padding: 2rem;">No events found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<h3><i class="fas fa-utensils"></i> Food Items</h3>
+<div style="margin-bottom: 20px;">
+    <a href="{% url 'food_item_create' %}" class="button">
+        <i class="fas fa-plus"></i> Add Food Item
+    </a>
+</div>
+<div class="table-container" style="margin-bottom: 30px;">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Vegetarian</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in food_items %}
+            <tr>
+                <td>#{{ item.id }}</td>
+                <td>
+                    {% if item.image %}
+                    <img src="{{ item.image.url }}" alt="{{ item.name }}"
+                        style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+                    {% else %}
+                    <span style="color: var(--text-light); font-size: 0.8rem;">No image</span>
+                    {% endif %}
+                </td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.description|truncatewords:10 }}</td>
+                <td style="font-weight: 600;">₹{{ item.price }}</td>
+                <td>
+                    {% if item.is_vegetarian %}
+                    <span
+                        style="background: #C6F6D5; color: #22543D; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">Yes</span>
+                    {% else %}
+                    <span
+                        style="background: #FED7D7; color: #822727; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">No</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <div style="display: flex; gap: 10px;">
+                        <a href="{% url 'food_item_update' item.id %}" class="button small"
+                            style="padding: 4px 8px; font-size: 0.8rem;">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <a href="{% url 'food_item_delete' item.id %}" class="button small"
+                            style="background-color: var(--danger-color); padding: 4px 8px; font-size: 0.8rem;">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" style="text-align: center; padding: 2rem;">No food items found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<h3><i class="fas fa-history"></i> Recent Bookings</h3>
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>User</th>
+                <th>Event</th>
+                <th>Status</th>
+                <th>Total Price</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in recent_bookings %}
+            <tr>
+                <td>#{{ booking.id }}</td>
+                <td>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <div
+                            style="width: 30px; height: 30px; background: var(--bg-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-color); font-weight: bold;">
+                            {{ booking.user.username|make_list|first|upper }}
+                        </div>
+                        {{ booking.user.username }}
+                    </div>
+                </td>
+                <td>{{ booking.event.title }}</td>
+                <td>
+                    {% if booking.status == 'CONFIRMED' %}
+                    <span
+                        style="background: #C6F6D5; color: #22543D; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">Confirmed</span>
+                    {% else %}
+                    <span
+                        style="background: #FED7D7; color: #822727; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 600;">{{
+                        booking.status }}</span>
+                    {% endif %}
+                </td>
+                <td style="font-weight: 600;">₹{{ booking.total_price }}</td>
+                <td style="color: var(--text-light);">{{ booking.created_at|date:"M d, Y" }}</td>
+                <td>
+                    <div style="display: flex; gap: 10px;">
+                        <a href="{% url 'booking_edit' booking.id %}" class="button small"
+                            style="padding: 4px 8px; font-size: 0.8rem;">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <a href="{% url 'booking_delete' booking.id %}" class="button small"
+                            style="background-color: var(--danger-color); padding: 4px 8px; font-size: 0.8rem;">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" style="text-align: center; padding: 2rem;">No bookings yet.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

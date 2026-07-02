@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-container" style="max-width: 600px; margin: 0 auto; padding: 2rem;">
+    <h2>Edit Booking #{{ booking.id }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <div class="actions" style="margin-top: 20px;">
+            <button type="submit" class="button">Save Changes</button>
+            <a href="{% url 'admin_dashboard' %}" class="button secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

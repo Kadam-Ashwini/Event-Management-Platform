@@ -1,0 +1,2 @@
+﻿Django==6.0
+pillow

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="text-align: center; padding: 3rem 1rem; margin-bottom: 2rem;">
+    <h1 style="font-size: 3rem; margin-bottom: 1rem; color: var(--primary-color);">Discover Amazing Events</h1>
+    <p style="font-size: 1.2rem; color: var(--text-light); max-width: 600px; margin: 0 auto;">
+        Find and book the best events happening around you. From concerts to workshops, we have it all.
+    </p>
+</div>
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem;">
+    <h2 class="text-center" style="margin: 0;">Upcoming Events</h2>
+    {% if user.is_staff %}
+    <a href="{% url 'event_create' %}" class="button">
+        <i class="fas fa-plus"></i> Create Event
+    </a>
+    {% endif %}
+</div>
+
+{% if events %}
+<div class="event-list">
+    {% for event in events %}
+    <div class="event-card">
+        {% if event.image %}
+        <img src="{{ event.image.url }}" alt="{{ event.title }}">
+        {% else %}
+        <img src="https://via.placeholder.com/400x250/6C63FF/FFFFFF?text={{ event.title|urlencode }}"
+            alt="{{ event.title }}">
+        {% endif %}
+        <div class="event-card-content">
+            <div class="event-meta">
+                <i class="far fa-calendar"></i> {{ event.date }}
+                <span style="margin: 0 5px;">•</span>
+                <i class="far fa-clock"></i> {{ event.time }}
+            </div>
+            <h3><a href="{% url 'event_detail' event.id %}">{{ event.title }}</a></h3>
+            <p style="color: var(--text-light); font-size: 0.95rem; margin-bottom: 1rem;">
+                <i class="fas fa-map-marker-alt" style="color: var(--accent-color);"></i> {{ event.location }}
+            </p>
+            <div class="event-price">₹{{ event.price }}</div>
+            <a href="{% url 'event_detail' event.id %}" class="button">View Details</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div
+    style="text-align: center; padding: 3rem; background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow-sm);">
+    <i class="far fa-calendar-times" style="font-size: 3rem; color: var(--text-light); margin-bottom: 1rem;"></i>
+    <h3>No upcoming events found</h3>
+    <p>Check back later for new events!</p>
+</div>
+{% endif %}
+{% endblock %}
