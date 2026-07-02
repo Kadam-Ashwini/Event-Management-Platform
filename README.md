@@ -151,4 +151,5 @@ Visit the app at **http://127.0.0.1:8000/**
 
 ## 👤 Author
 
-**Kadam Ashwini**
+**Ashwini Kadam**: 
+[GitHub](https://github.com/Kadam-Ashwini) · [LinkedIn](https://www.linkedin.com/in/ashwini-s-kadam/)
